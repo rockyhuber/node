@@ -23,6 +23,8 @@ app.post('/todos', (req, res) => {
   });
 });
 
+/////////////GET TODOS
+
 app.get('/todos', (req, res) => {
   Todo.find().then((todos) => {
     res.send({todos});
@@ -49,10 +51,33 @@ app.get('/todos', (req, res) => {
   });
 });
 
+//////////////DELETE TODOS
+
+  app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+      return res.status(404).send();
+    }
+
+    Todo.findByIdAndRemove(id).then((todo) => {
+      if(!todo) {
+        return res.status(404).send();
+      }
+
+      res.status(200).send(todo);
+    }).catch((e) => {
+      res.status(400).send();
+    });
+    });
+
+
+
+
 if(!module.parent){
   app.listen(port, () => {
     console.log(`Started up at port ${port}`);
-  });
+  }); // http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
 };
 
 
