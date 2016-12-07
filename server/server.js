@@ -31,8 +31,8 @@ app.get('/todos', (req, res) => {
   });
 });
 
-app.get('/todos/:id', (req, res) => {
-  var id = req.params.id;
+  app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
@@ -49,8 +49,11 @@ app.get('/todos/:id', (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Started up at port ${port}`);
-});
+if(!module.parent){
+  app.listen(port, () => {
+    console.log(`Started up at port ${port}`);
+  });
+};
+
 
 module.exports = {app};
