@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
@@ -27,7 +29,7 @@ app.post('/todos', (req, res) => {
 
 app.get('/todos', (req, res) => {
   Todo.find().then((todos) => {
-    res.send({todos});
+    res.send({todos}); //{todos} === {todos: todo}
   }, (e) => {
     res.status(400).send(e);
   });
@@ -65,13 +67,13 @@ app.get('/todos', (req, res) => {
         return res.status(404).send();
       }
 
-      res.status(200).send(todo);
+      res.status(200).send({todo});
     }).catch((e) => {
       res.status(400).send();
     });
     });
 
-
+//////////////UPDATE TODOS
 
 
 if(!module.parent){
